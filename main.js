@@ -1,4 +1,11 @@
 var todo_array = [];
+var user_object = {};
+
+function login() {
+    user_object.username = $('#username').val();
+    user_object.password = $('#password').val();
+    console.log('user_object is ', user_object);
+}
 
 function create_list(array) {
     for (var i = 0; i < array.length; i++) {
@@ -38,12 +45,21 @@ function add_user_input() {
 }
 $(document).ready(function() {
     server_call();
+
+    $('#logout_btn').click(function(){
+        logout();
+    })
+
+    $('#login_btn').click(function() {
+        login();
+    });
+
     $('#add_item_btn').click(function() {
         $('#add_item_modal').modal('show');
     });
 
     $('#submit_info').click(function() {
         add_user_input();
-         create_list(todo_array);
+        create_list(todo_array);
     });
 });
