@@ -1,0 +1,122 @@
+body{
+	font-family: 'Special Elite', cursive;
+	background: url('images/linedpaper.png');
+}
+/*
+=================================
+STYLING FOR HEADER
+=================================
+*/
+header{
+	background-color: black;
+	#background: url('images/header.png');
+	border-bottom: 4px solid #CDCBD5;
+	top:0;	
+	width: 100%;
+	height: 30vh;
+	position: absolute;
+}
+
+.btn{
+
+}
+
+.logout {
+  	left: 3%;
+  	top: 4%;
+  	position: absolute;
+  	background: none;
+}
+
+.logout_icon {
+	position: absolute;
+	width: 100px;
+	fill: #CDCBD5;
+	top:2%;
+	left: 1%;
+	transition: 0.5s;
+}
+
+
+.logout_icon:hover {
+	fill: white;
+}
+
+.logout:hover {
+	color: white;
+}
+
+.title {
+	text-align: center;
+	color: white; 
+	position: relative;
+	top: 20%;
+	font-size: 5em;
+}
+
+#add_item_btn {
+	position: absolute;
+	background: #CDCBD5;
+	#border-radius: 50%;
+	top: 13%;
+	right: 3%;
+	transition: 0.5s;
+}
+
+#add_item_btn:hover {
+	background: white;
+}
+/*
+=================================
+STYLING FOR HEADER
+=================================
+*/
+ul{
+	list-style: none;
+	font-size: 30px;
+	text-transform: uppercase;
+}
+ul li{
+	font-size: 20px;
+}
+
+/*
+=================================
+STYLING FOR HEADER
+=================================
+*/
+input{
+	border: none;
+}
+
+/*
+=================================
+STYLING FOR MODAL
+=================================
+*/
+.close {
+	width: 50px;
+	color: white;
+  	font-size: 39px;
+}
+.modal-dialog{
+	background: url('images/header.png');
+	height: 80%;
+	border-radius: 10px;
+
+}
+
+input {
+	background: rgba(58,49,55, 0.6);
+	width: 100%;
+  	height: 40px;
+  	border-radius: 5px;
+}
+h4, label {
+	color:white;
+}
+
+.main_body {
+	top:40%;
+	position: absolute;
+}

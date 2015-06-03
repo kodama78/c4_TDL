@@ -17,9 +17,6 @@ $.ajax({
 }get_todo();
  //end of function
 
-
-
-
 $(document).ready(function(){
 	
 
