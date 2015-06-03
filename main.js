@@ -60,7 +60,7 @@ function add_user_input() {
     todo_array.push(new_list_item);
 }
 $(document).ready(function() {
-    // server_call();
+     server_call();
     $('#logout_btn').click(function(){
         logout();
     });
