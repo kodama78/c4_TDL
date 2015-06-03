@@ -1,12 +1,54 @@
 var todo_array = [];
 var user_object = {};
 
-function login() {
+function user_object_create() { //
     user_object.username = $('#username').val();
     user_object.password = $('#password').val();
     console.log('user_object is ', user_object);
 }
 
+function user_login() {
+    $.ajax({
+        url: 'http://s-apis.learningfuze.com/todo/login',
+        dataType: 'json',
+        cache: false,
+        method: 'POST',
+        crossDomain: true,
+        data: {
+            username: user_object.username , 
+            password: user_object.password
+        },
+        success: function(response) {
+            console.log("response ", response);
+            $.ajax({
+                url: 'http://s-apis.learningfuze.com/todo/index',
+                cache: false,
+                method: 'GET',
+                crossDomain: true,
+            });
+        }
+
+    });
+
+}
+
+function logout(){
+
+    $.ajax({
+        url:'http://s-apis.learningfuze.com/todo/logout',
+        dataType: 'json',
+        cache: false,
+        crossDomain: true,
+        success: function(response){
+            console.log("response ", response);
+            user_object = {};
+        },
+        error: function(response){
+            console.log("response ", response);
+
+        }
+    });
+}
 function create_list(array) {
     for (var i = 0; i < array.length; i++) {
         var title = $('<ul>').text(array[i].title);
@@ -44,14 +86,15 @@ function add_user_input() {
     todo_array.push(new_list_item);
 }
 $(document).ready(function() {
-    server_call();
+    //server_call();
 
     $('#logout_btn').click(function(){
         logout();
     })
 
     $('#login_btn').click(function() {
-        login();
+        user_object_create();
+        user_login();
     });
 
     $('#add_item_btn').click(function() {
