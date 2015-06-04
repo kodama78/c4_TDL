@@ -1,0 +1,29 @@
+<div class="account_creation" id="account_creation_container">
+    <div class="container">
+        <form role="form">
+            <div class="form-group">
+                <label for="email">Please enter your email address</label>
+                <input type="email" class="form-control" id="account_email" placeholder="Email Address">
+                <input type="text" class="form-control" id="account_firstname" placeholder="Firstname">
+                <input type="text" class="form-control" id="account_lastname" placeholder="Lastname">
+                <input type="text" class="form-control" id="username" placeholder="Choose a Username">
+                <input type="password" class="form-control" id="password" placeholder="Choose a Password">
+                <input type="password" class="form-control" id="password_confirmation" placeholder="Confirm Your Password">
+                <button type="button" class="btn btn-success" id="submit_account_btn">Add Account</button>
+            </div>
+        </form>
+        <div id="password_confirmation_modal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Passwords must match</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
