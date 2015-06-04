@@ -98,8 +98,9 @@ function add_user_input() {
     new_list_item.title = $('#title_info').val();
     new_list_item.details = $('#details_info').val();
     new_list_item.timeStamp = $('#due_date').val();
-    todo_array.push(new_list_item);
+    new_list_item.id = user_object.id;
 }
+
 $(document).ready(function() {
     load_page();
     // server_call();
