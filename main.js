@@ -19,12 +19,30 @@ function user_login_server(user_object) {
             password: user_object.password
         },
         success: function(response) {
-            console.log("response ", response);
-            
+            console.log("response is", response);
+            user_object.firstName = response.firstName;
+            user_object.lastName = response.lastName;
+            user_object.id = response.id;
         }
     });
 }
-
+function load_page() {
+    target_url = 'login.html';
+    $.ajax({
+        url: 'pages/' + target_url,
+        dataType: 'html',
+        cache: false,
+        success: function(response) {
+            $('.main_body').html('');
+            $('.main_body').append(response);
+            $('#login_btn').click(function() {
+                console.log('clicked fucker')
+                user_object_create();
+                user_login_server(user_object);
+            });
+        }
+    });
+}
 function logout() {
 
     $.ajax({
@@ -32,6 +50,10 @@ function logout() {
         dataType: 'json',
         cache: false,
         crossDomain: true,
+        method: 'POST',
+        data: {
+            username: user_object.username,
+        },
         success: function(response) {
             console.log("response ", response);
             user_object = {};
@@ -79,17 +101,11 @@ function add_user_input() {
     todo_array.push(new_list_item);
 }
 $(document).ready(function() {
-
+    load_page();
     // server_call();
     $('#logout_btn').click(function() {
         logout();
     });
-
-    $('#login_btn').click(function() {
-        user_object_create();
-        user_login_server(user_object)
-    });
-
     $('#add_item_btn').click(function() {
         console.log('plus button clicked');
         $('#add_item_modal').modal('show');
