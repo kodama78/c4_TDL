@@ -1,6 +1,8 @@
 var todo_array = [];
 var user_object = {};
 var user_account = {};
+// TU - I want to create a logged in default condition//
+var logged_in = false;
 // user account creation functionality //
 function account_object_create(){   
     user_account.username = $('#username').val();
@@ -63,7 +65,8 @@ function user_login_server(user_object) {
             password: user_object.password
         },
         success: function(response) {
-
+            logged_in = true;
+            console.log('logged_in status is', logged_in);
             console.log("user login response is", response);
             user_object.firstName = response.firstName;
             user_object.lastName = response.lastName;
@@ -107,7 +110,8 @@ function load_page() {
         }
     });
 }
-//loads the account creation page on click of account_create_initiator button//
+//loads the account creation page on click of account_create_initiator button and appends pages/account_creation.html //
+//to '.main_body'
 function load_account_create_page(){
             $.ajax({
                 url: 'pages/account_creation.html',
@@ -129,6 +133,7 @@ function load_account_create_page(){
 //function to log out user
 function logout() {
     console.log('in the logout function');
+    console.log(user_object);
     $.ajax({
         url: 'http://s-apis.learningfuze.com/todo/logout',
         dataType: 'json',
@@ -140,9 +145,21 @@ function logout() {
             sid: user_object.sid,
         },
         success: function(response) {
-            console.log('logout response is ', response)
+            console.log('logout response is ', response);
+            $.ajax({
+                url: 'pages/login.html',
+                dataType: 'html',
+                method: 'GET',
+                crossDomain: true,
+                cache: false
+            });
+
             user_object = {};
-        },
+            $('.main_body').html('');
+            $('.main_body').append(response);
+            load_page();
+
+        }
         // error: function(response) {
             
         // }
@@ -182,11 +199,12 @@ function server_call() {
         crossDomain: true,
         method:'POST',
         success:function(response){
-            todo_list = response.data;
-            for (var i = 0; i < todo_list.length; i++){
-                todo_array.push(todo_list[i]);
-            }
-            create_list(todo_array);
+            // todo_list = response.data;
+            // console.log('todo_list', response);
+            // for (var i = 0; i < todo_list.length; i++){
+            //     todo_array.push(todo_list[i]);
+            // }
+            // create_list(todo_array);
         }
     });
 }
@@ -278,10 +296,11 @@ $(document).ready(function() {
     load_page();
     date_maker();
     // server_call();
-   
     $('#logout_btn').click(function() {
-        logout();
+                console.log('logout clicked');
+                logout();
     });
+
     $('#add_item_btn').click(function() {
         $('#add_item_modal').modal('show');
     });
