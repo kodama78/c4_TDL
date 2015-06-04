@@ -3,8 +3,8 @@ $(document).ready(function() {
 $('#list').on('click','.remove', function(){
     $(this).hide('2000', function(){
         $(this).remove();
-    }
-}
+    });
+});
 
     //changes input box color
 $(':text').focus(function() {

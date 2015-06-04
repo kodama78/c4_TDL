@@ -133,7 +133,16 @@ function create_list(array) {
         var details = $('<li>').text(array[i].details);
         var timestamp = $('<li>').text(array[i].timeStamp);
         // var user_id = array[i].user_id;
-        title.append(details, timestamp);
+        var deleteBtn = $('<button>', {
+            id: parseInt(array[i].id),
+            class: 'btn btn-danger col-md-2 list',
+            type: 'button',
+            text: 'Delete',
+        });
+        deleteBtn.on('click', function(){
+            deleteButton();
+        });
+        title.append(details, timestamp, deleteBtn);
         $('.list_items').append(title);
     }
 }
@@ -181,6 +190,26 @@ function add_user_input() {
         },
         success:function(response){
         }
+    });
+}
+
+//adds delete functionality to delete button
+function deleteButton(){
+    $.ajax({
+    url: 'http://s-apis.learningfuze.com/todo/delete',
+    dataType: 'json',
+    method: 'POST',
+    data: {
+    postID: $(this).attr('id'),
+    },  
+    success: function(response){
+        console.log("response is", response);
+        console.log("success");
+    },
+    error: function(response){
+        console.log("response is", response);
+        console.log("error");
+    }
     });
 }
 //creates date and time for modal
