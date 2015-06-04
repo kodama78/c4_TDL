@@ -75,6 +75,9 @@ function server_call() {
     });
 }
 
+//Travis modal input development section//
+
+//end of Travis development section//
 function add_user_input() {
     $('.todo').html('');
     var new_list_item = {};
