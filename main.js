@@ -134,13 +134,13 @@ function create_list(array) {
         var timestamp = $('<li>').text(array[i].timeStamp);
         // var user_id = array[i].user_id;
         var deleteBtn = $('<button>', {
-            id: parseInt(array[i].id),
+            id: array[i].id,
             class: 'btn btn-danger col-md-2 list',
             type: 'button',
             text: 'Delete',
         });
-        deleteBtn.on('click', function(){
-            deleteButton();
+        deleteBtn.on('click', function(e){
+            deleteButton(this);
         });
         title.append(details, timestamp, deleteBtn);
         $('.list_items').append(title);
@@ -194,13 +194,14 @@ function add_user_input() {
 }
 
 //adds delete functionality to delete button
-function deleteButton(){
+function deleteButton(ele){
+    console.log('btn id:',$(ele).attr('id'));
     $.ajax({
     url: 'http://s-apis.learningfuze.com/todo/delete',
     dataType: 'json',
     method: 'POST',
     data: {
-    postID: $(this).attr('id'),
+    postId: $(ele).attr('id'),
     },  
     success: function(response){
         console.log("response is", response);
