@@ -15,38 +15,57 @@ function user_login_server(user_object) {
         method: 'POST',
         crossDomain: true,
         data: {
-            username: user_object.username , 
+            username: user_object.username,
             password: user_object.password
         },
         success: function(response) {
-            console.log("response ", response);
-            $.ajax({
-                url: 'http://s-apis.learningfuze.com/todo/index',
-                cache: false,
-                method: 'GET',
-                crossDomain: true,
+            console.log("response is", response);
+            user_object.firstName = response.firstName;
+            user_object.lastName = response.lastName;
+            user_object.id = response.id;
+        }
+    });
+}
+
+function load_page() {
+    target_url = 'login.html';
+    $.ajax({
+        url: 'pages/' + target_url,
+        dataType: 'html',
+        cache: false,
+        success: function(response) {
+            $('.main_body').html('');
+            $('.main_body').append(response);
+            $('#login_btn').click(function() {
+                console.log('clicked fucker')
+                user_object_create();
+                user_login_server(user_object);
             });
         }
     });
-
 }
 
-function logout(){
+function logout() {
 
     $.ajax({
-        url:'http://s-apis.learningfuze.com/todo/logout',
+        url: 'http://s-apis.learningfuze.com/todo/logout',
         dataType: 'json',
         cache: false,
         crossDomain: true,
-        success: function(response){
+        method: 'POST',
+        data: {
+            username: user_object.username,
+        },
+        success: function(response) {
             console.log("response ", response);
             user_object = {};
         },
-        error: function(response){
+        error: function(response) {
             console.log("response ", response);
         }
     });
 }
+
 function create_list(array) {
     for (var i = 0; i < array.length; i++) {
         var title = $('<ul>').text(array[i].title);
@@ -87,18 +106,15 @@ function add_user_input() {
     todo_array.push(new_list_item);
 }
 $(document).ready(function() {
-
+    load_page();
     // server_call();
-    $('#logout_btn').click(function(){
+    $('#logout_btn').click(function() {
         logout();
     });
 
-    $('#login_btn').click(function() {
-        login();
-        user_login_server(user_object)
-    });
 
-    $('#add_item_btn').click(function(){
+
+    $('#add_item_btn').click(function() {
         console.log('plus button clicked');
         $('#add_item_modal').modal('show');
     });
