@@ -65,6 +65,11 @@ function user_login_server(user_object) {
             password: user_object.password
         },
         success: function(response) {
+            if (response.success == false){
+                console.log('login check returned', response);
+                load_page();
+                alert('wrong username or password... Please try again');
+            }
             logged_in = true;
             console.log('logged_in status is', logged_in);
             console.log("user login response is", response);
