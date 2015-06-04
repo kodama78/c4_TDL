@@ -86,7 +86,6 @@ function create_list(array) {
         var title = $('<ul>').text(array[i].title);
         var details = $('<li>').text(array[i].details);
         var timestamp = $('<li>').text(array[i].timeStamp);
-        // var id = array[i].id;
         // var user_id = array[i].user_id;
         title.append(details, timestamp);
         $('.list_items').append(title);
@@ -105,19 +104,22 @@ function server_call() {
         crossDomain: true,
         method:'POST',
         success:function(response){
-            console.log('response is ', response);
-            todo_array.push(response.data[0]);
-            console.log('todo_array is ', todo_array)
+            console.log('response.data is ', response.data);
+            todo_list = response.data;
+            for (var i = 0; i < todo_list.length; i++){
+                todo_array.push(todo_list[i]);
+            }
             create_list(todo_array);
-
         }
     });
 }
 
 //creates new todo item and sends it to the server
 function add_user_input() {
-    date = $('#year').val() + '/' + $('#month').val() + '/' + $('#day').val() + ' ' + $('#hour').val() + ':' + $('#minute').val(); + $('#daylight').val();
-    $('.todo').html('');
+    date = $('#year').val() + '/' + $('#month').val() + '/' + $('#day').val() + ' ' + 
+    $('#hour').val() + ':' + $('#minute').val()  + $('#daylight').val();
+    console.log('date is', date)
+    $('.list_items').html('');
     var new_list_item = {};
     new_list_item.title = $('#title_info').val();
     new_list_item.details = $('#details_info').val();
