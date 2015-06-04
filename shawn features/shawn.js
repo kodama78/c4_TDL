@@ -59,3 +59,6 @@ function date_maker() {
     daylight.append(am, pm)
     $('.modal-body').append(month_label, month, year_label, year, day_label, day, hour_label, hour_label, hour, minute_label, minute, daylight);
 }
+
+//converts date_maker info to input
+
