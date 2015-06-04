@@ -75,6 +75,7 @@ function user_login_server(user_object) {
 }
 
 //function that loads the page after login to the todo
+//TU - we should probably rename this function to a more specific page name//
 function load_page() {
     $.ajax({
         url: 'pages/login.html',
@@ -99,10 +100,32 @@ function load_page() {
                     }
                 });
             });
+             $('#account_create_initiator').click(function(){
+                console.log('create account clicked');
+                load_account_create_page();
+            });
         }
     });
 }
-
+//loads the account creation page on click of account_create_initiator button//
+function load_account_create_page(){
+            $.ajax({
+                url: 'pages/account_creation.html',
+                dataType: 'html',
+                method: 'GET',
+                cache: false,
+                success: function(response){
+                    $('.main_body').html('');
+                    $('.main_body').append(response);
+                    //account creation click function//
+                    $('#submit_account_btn').click(function(){
+                    account_object_create();
+                    $('.main_body').html('');
+                    console.log('user_account is ', user_account);
+                    });
+            }
+        });
+    }
 //function to log out user
 function logout() {
     console.log('in the logout function');
@@ -134,13 +157,13 @@ function create_list(array) {
         var timestamp = $('<li>').text(array[i].timeStamp);
         // var user_id = array[i].user_id;
         var deleteBtn = $('<button>', {
-            id: parseInt(array[i].id),
+            id: array[i].id,
             class: 'btn btn-danger col-md-2 list',
             type: 'button',
             text: 'Delete',
         });
-        deleteBtn.on('click', function(){
-            deleteButton();
+        deleteBtn.on('click', function(e){
+            deleteButton(this);
         });
         title.append(details, timestamp, deleteBtn);
         $('.list_items').append(title);
@@ -194,13 +217,14 @@ function add_user_input() {
 }
 
 //adds delete functionality to delete button
-function deleteButton(){
+function deleteButton(ele){
+    console.log('btn id:',$(ele).attr('id'));
     $.ajax({
     url: 'http://s-apis.learningfuze.com/todo/delete',
     dataType: 'json',
     method: 'POST',
     data: {
-    postID: $(this).attr('id'),
+    postId: $(ele).attr('id'),
     },  
     success: function(response){
         console.log("response is", response);
@@ -254,12 +278,7 @@ $(document).ready(function() {
     load_page();
     date_maker();
     // server_call();
-    //account creation click function//
-    $('#submit_account_btn').click(function(){
-    account_object_create();
-    console.log('user_account is ', user_account);
-    });
-
+   
     $('#logout_btn').click(function() {
         logout();
     });
