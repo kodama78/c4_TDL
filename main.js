@@ -5,7 +5,6 @@ var user_object = {};
 function user_object_create() { //
     user_object.username = $('#username').val();
     user_object.password = $('#password').val();
-    console.log('user_object is ', user_object);
 }
 
 //function to create user object from server reponse
@@ -21,10 +20,12 @@ function user_login_server(user_object) {
             password: user_object.password
         },
         success: function(response) {
-            console.log("response is", response);
+
+            console.log("user login response is", response);
             user_object.firstName = response.firstName;
             user_object.lastName = response.lastName;
             user_object.id = response.id;
+            server_call();
         }
     });
 }
@@ -71,11 +72,11 @@ function logout() {
             username: user_object.username,
         },
         success: function(response) {
-            console.log("response ", response);
+            
             user_object = {};
         },
         error: function(response) {
-            console.log("response ", response);
+            
         }
     });
 }
@@ -104,7 +105,6 @@ function server_call() {
         crossDomain: true,
         method:'POST',
         success:function(response){
-            console.log('response.data is ', response.data);
             todo_list = response.data;
             for (var i = 0; i < todo_list.length; i++){
                 todo_array.push(todo_list[i]);
@@ -118,7 +118,6 @@ function server_call() {
 function add_user_input() {
     date = $('#year').val() + '/' + $('#month').val() + '/' + $('#day').val() + ' ' + 
     $('#hour').val() + ':' + $('#minute').val()  + $('#daylight').val();
-    console.log('date is', date)
     $('.list_items').html('');
     var new_list_item = {};
     new_list_item.title = $('#title_info').val();
@@ -136,7 +135,6 @@ function add_user_input() {
             userId: new_list_item.id,
         },
         success:function(response){
-            console.log('response is', response);
         }
     });
 }
@@ -186,7 +184,6 @@ $(document).ready(function() {
         logout();
     });
     $('#add_item_btn').click(function() {
-        console.log('plus button clicked');
         $('#add_item_modal').modal('show');
     });
 
