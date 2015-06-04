@@ -19,8 +19,7 @@ function user_login_server(user_object) {
             password: user_object.password
         },
         success: function(response) {
-            console.log("response ", response);
-            
+            console.log("response ", response);      
         }
     });
 }
