@@ -26,7 +26,6 @@ function user_login_server(user_object) {
         }
     });
 }
-
 function load_page() {
     target_url = 'login.html';
     $.ajax({
@@ -44,7 +43,6 @@ function load_page() {
         }
     });
 }
-
 function logout() {
 
     $.ajax({
@@ -111,9 +109,6 @@ $(document).ready(function() {
     $('#logout_btn').click(function() {
         logout();
     });
-
-
-
     $('#add_item_btn').click(function() {
         console.log('plus button clicked');
         $('#add_item_modal').modal('show');
