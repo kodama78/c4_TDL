@@ -186,36 +186,36 @@ function add_user_input() {
 //creates date and time for modal
 function date_maker() {
     var year_label = $('<label>').attr('for', 'year').text('Year');
-    var year = $('<select>').attr('id', 'year');
+    var year = $('<select>').addClass("form-control").attr('id', 'year');
     for (var i = 2015; i < 2025; i++) {
         var option = $('<option>').val(i).html(i);
         year.append(option);
     }
     var month_label = $('<label>').attr('for', 'month').text('Month');
-    var month = $('<select>').attr('id', 'month');
+    var month = $('<select>').addClass("form-control").attr('id', 'month');
     for (var i = 1; i < 13; i++) {
         var option = $('<option>').val(i).html(i);
         month.append(option);
     }
     var day_label = $('<label>').attr('for', 'day').text('Day');
-    var day = $('<select>').attr('id', 'day');
+    var day = $('<select>').addClass("form-control").attr('id', 'day');
     for (var i = 1; i < 32; i++) {
         var option = $('<option>').val(i).html(i);
         day.append(option);
     }
     var hour_label = $('<label>').attr('for', 'hour').text('Hour');
-    var hour = $('<select>').attr('id', 'hour');
+    var hour = $('<select>').addClass("form-control").attr('id', 'hour');
     for (var i = 1; i < 13; i++) {
         var option = $('<option>').val(i).html(i);
         hour.append(option);
     }
     var minute_label = $('<label>').attr('for', 'minute').text('Minute');
-    var minute = $('<select>').attr('id', 'minute');
+    var minute = $('<select>').addClass("form-control").attr('id', 'minute');
     for (var i = 1; i < 60; i++) {
         var option = $('<option>').val(i).html(i);
         minute.append(option);
     }
-    var daylight = $('<select>').attr('id', 'daylight');
+    var daylight = $('<select>').addClass("form-control").attr('id', 'daylight');
     var am = $('<option>').val('AM').html('AM');
     var pm = $('<option>').val('PM').html('PM');
     daylight.append(am, pm)
