@@ -90,20 +90,24 @@ function create_list(array) {
 
 function server_call() {
     $.ajax({
-        dataType: 'json',
         url: 'http://s-apis.learningfuze.com/todo/get',
-        method: 'GET',
+        dataType:'JSON',
+        data: {
+            userId:user_object.id
+        },
         cache: false,
         crossDomain: true,
-        success: function(response) {
-            console.log('response for server call is', response);
-            // for (var i = 0; i < response.length; i++) {
-            //     todo_array.push(response[i]);
-            // }
-            // create_list(todo_array);
+        method:'POST',
+        success:function(response){
+            console.log('response is ', response);
+            todo_array.push(response.data[0]);
+            console.log('todo_array is ', todo_array)
+            create_list(todo_array);
+
         }
     });
 }
+
 //creates new todo item and sends it to the server
 function add_user_input() {
     $('.todo').html('');
