@@ -207,3 +207,51 @@ STYLING FOR FORM
    -webkit-box-shadow: inset 0 0 7px #191919;
    box-shadow:         inset 0 0 7px #191919;
 }
+
+/*
+=================================
+STYLING FOR LIST
+=================================
+*/
+.list {
+    font-size: 25px;
+    color: #A69C94;
+    padding: 0 2rem 2rem;
+    list-style-type: none;
+    clear: both;
+}
+
+.list .remove {
+    position: relative;
+    margin: 1em 14;
+    padding: 1em;
+    left:0px;
+    #font-size: 1em;
+}
+
+.list .remove:after {
+    position: absolute;
+    height: 30px;
+    width: 30px;
+    content: '+';
+    font-weight: 300;
+    opacity: 0.7;
+    top: 38%;
+    border-radius: 50%;
+    font-size: 2rem;
+    text-align: center;
+    color: white;
+    background: red;
+    margin-left: 2em;
+    cursor: default;
+    #transform: rotate(45deg);
+    #transition: all 0.3s ease-out;
+}
+
+.list .remove:hover:after {
+    background: red;
+    opacity: 1;
+    #transform: translateY(-50%);
+    #transform: rotate(225deg);
+}
+
