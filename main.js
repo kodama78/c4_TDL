@@ -7,7 +7,7 @@ function user_object_create() { //
     console.log('user_object is ', user_object);
 }
 
-function user_login() {
+function user_login_server(user_object) {
     $.ajax({
         url: 'http://s-apis.learningfuze.com/todo/login',
         dataType: 'json',
@@ -15,40 +15,67 @@ function user_login() {
         method: 'POST',
         crossDomain: true,
         data: {
-            username: user_object.username , 
+            username: user_object.username,
             password: user_object.password
         },
         success: function(response) {
-            console.log("response ", response);
-            $.ajax({
-                url: 'http://s-apis.learningfuze.com/todo/index',
-                cache: false,
-                method: 'GET',
-                crossDomain: true,
-            });
+            console.log("response is", response);
+            user_object.firstName = response.firstName;
+            user_object.lastName = response.lastName;
+            user_object.id = response.id;
         }
-
     });
-
 }
 
-function logout(){
+//function that loads the page after login to the todo
+function load_page() {
+    $.ajax({
+        url: 'pages/login.html',
+        dataType: 'html',
+        cache: false,
+        success: function(response) {
+            $('.main_body').html('');
+            $('.main_body').append(response);
+            $('#login_btn').click(function() {
+                user_object_create();
+                user_login_server(user_object);
+                $('.main_body').html('');
+                $.ajax({
+                    url: 'pages/todo.html',
+                    dataType: 'html',
+                    method: 'GET',
+                    cache: false,
+                    success: function(response){
+                        console.log('response is', response)
+                        $('.main_body').html('');
+                        $('.main_body').append(response);
+                    }
+                });
+            });
+        }
+    });
+}
+function logout() {
 
     $.ajax({
-        url:'http://s-apis.learningfuze.com/todo/logout',
+        url: 'http://s-apis.learningfuze.com/todo/logout',
         dataType: 'json',
         cache: false,
         crossDomain: true,
-        success: function(response){
+        method: 'POST',
+        data: {
+            username: user_object.username,
+        },
+        success: function(response) {
             console.log("response ", response);
             user_object = {};
         },
-        error: function(response){
+        error: function(response) {
             console.log("response ", response);
-
         }
     });
 }
+
 function create_list(array) {
     for (var i = 0; i < array.length; i++) {
         var title = $('<ul>').text(array[i].title);
@@ -57,52 +84,67 @@ function create_list(array) {
         // var id = array[i].id;
         // var user_id = array[i].user_id;
         title.append(details, timestamp);
-        $('.todo').append(title);
+        $('.list_items').append(title);
     }
 }
 
 function server_call() {
     $.ajax({
-        dataType: 'json',
-        url: 'get_todo_items.json',
-        method: 'GET',
+        url: 'http://s-apis.learningfuze.com/todo/get',
+        dataType:'JSON',
+        data: {
+            userId:user_object.id
+        },
         cache: false,
         crossDomain: true,
-        success: function(response) {
-            for (var i = 0; i < response.length; i++) {
-                todo_array.push(response[i]);
-            }
+        method:'POST',
+        success:function(response){
+            console.log('response is ', response);
+            todo_array.push(response.data[0]);
+            console.log('todo_array is ', todo_array)
             create_list(todo_array);
+
         }
     });
 }
 
+//creates new todo item and sends it to the server
 function add_user_input() {
     $('.todo').html('');
     var new_list_item = {};
     new_list_item.title = $('#title_info').val();
     new_list_item.details = $('#details_info').val();
     new_list_item.timeStamp = $('#due_date').val();
-    todo_array.push(new_list_item);
-}
-$(document).ready(function() {
-    //server_call();
-
-    $('#logout_btn').click(function(){
-        logout();
-    })
-
-    $('#login_btn').click(function() {
-        user_object_create();
-        user_login();
+    new_list_item.id = user_object.id;
+    $.ajax({
+        url:'http://s-apis.learningfuze.com/todo/create',
+        method: 'POST',
+        dataType: 'json',
+        data: {
+            title: new_list_item.title,
+            dueDate: new_list_item.timeStamp,
+            details: new_list_item.details,
+            userId: new_list_item.id,
+        },
+        success:function(response){
+            console.log('response is', response);
+        }
     });
+}
 
+$(document).ready(function() {
+    load_page();
+    // server_call();
+    $('#logout_btn').click(function() {
+        logout();
+    });
     $('#add_item_btn').click(function() {
+        console.log('plus button clicked');
         $('#add_item_modal').modal('show');
     });
 
     $('#submit_info').click(function() {
         add_user_input();
-        create_list(todo_array);
+        server_call();
     });
 });
