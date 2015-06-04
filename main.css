@@ -1,8 +1,9 @@
-@import url(http://fonts.googleapis.com/css?family=Architects+Daughter;);
+@import url(http://fonts.googleapis.com/css?family=Architects+Daughter);
+
 
 body{
-	font-family: 'Special Elite', cursive;
-	background: url('images/linedpaper.png');
+	font-family: 'Special Elite';
+	background: url('images/background.png');
 }
 /*
 =================================
@@ -10,9 +11,9 @@ STYLING FOR HEADER
 =================================
 */
 header{
-	background-color: black;
+	background: black;
 	#background: url('images/header.png');
-	border-bottom: 4px solid #CDCBD5;
+	border-bottom: 7px solid #CDCBD5;
 	top:0;	
 	width: 100%;
 	height: 30vh;
@@ -60,7 +61,7 @@ header{
 #add_item_btn {
 	position: absolute;
 	background: #CDCBD5;
-	#border-radius: 50%;
+	border-radius: 50%;
 	top: 13%;
 	right: 3%;
 	transition: 0.5s;
@@ -106,14 +107,18 @@ STYLING FOR MODAL
 	background: url('images/header.png');
 	height: 80%;
 	border-radius: 10px;
-
 }
 
 input {
 	background: rgba(58,49,55, 0.6);
 	width: 100%;
-  	height: 40px;
+  	height: 10vh;
   	border-radius: 5px;
+  	font-size: 20px;
+}
+
+input:focus, input:active {
+	outline: none !important;
 }
 h4, label {
 	color:white;
@@ -122,4 +127,83 @@ h4, label {
 .main_body {
 	top:40%;
 	position: absolute;
+}
+
+#title_info::-webkit-input-placeholder {
+    color: white;
+}
+#details_info::-webkit-input-placeholder {
+    color: white;
+}
+#due_date::-webkit-input-placeholder {
+    color: white;
+}
+
+button.close {
+  -webkit-appearance: none;
+  padding: 7px;
+}
+
+button:focus, button:active {
+	outline: none !important;
+}
+
+#submit_info {
+	width: 200px;
+	height: 10vh;
+	font-size: 20px;
+	#background: #C77D71;/*add*/
+	border: none;
+	transition: 0.5s;
+}
+
+#submit_info:hover {
+	#background: #E69F81;/*add*/
+}
+
+/*
+=================================
+STYLING FOR FORM
+=================================
+*/
+.form_container {
+	width: 600px;
+	height: 50vh;
+	border-radius: 10px;
+	background: url('images/header1.png');
+	margin-top: 50px;
+	border-top: 10px solid #191919;
+	border-bottom: 10px solid #191919;
+}
+
+.form-control {
+	width: 400px;
+	height: 50px;
+	margin-left: 90px;
+}
+
+.btn-success {
+	color: #333;
+	width: 200px;
+	height: 50px;
+	margin-left: 90px;
+	#background: #C77D71;/*add*/
+	border:none;
+	transition: 0.5s;
+}
+
+
+.btn-success:hover {
+	color: #333;
+	#background: #E69F81;/*add*/
+}
+#username, #password {
+	border-radius: 10px;
+	border: none;
+	background: url('images/header1.png');
+	color: white;
+	font-size: 18px;
+	   -moz-box-shadow:    inset 0 0 7px #191919;
+   -webkit-box-shadow: inset 0 0 7px #191919;
+   box-shadow:         inset 0 0 7px #191919;
 }

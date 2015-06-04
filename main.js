@@ -1,12 +1,14 @@
 var todo_array = [];
 var user_object = {};
 
+//creates the user object to log in to the server
 function user_object_create() { //
     user_object.username = $('#username').val();
     user_object.password = $('#password').val();
     console.log('user_object is ', user_object);
 }
 
+//function to create user object from server reponse
 function user_login_server(user_object) {
     $.ajax({
         url: 'http://s-apis.learningfuze.com/todo/login',
@@ -55,6 +57,8 @@ function load_page() {
         }
     });
 }
+
+//function to log out user
 function logout() {
 
     $.ajax({
@@ -76,6 +80,7 @@ function logout() {
     });
 }
 
+//creates list from todo_array
 function create_list(array) {
     for (var i = 0; i < array.length; i++) {
         var title = $('<ul>').text(array[i].title);
@@ -88,6 +93,7 @@ function create_list(array) {
     }
 }
 
+//function that queries the server for the todo list info
 function server_call() {
     $.ajax({
         url: 'http://s-apis.learningfuze.com/todo/get',
@@ -110,11 +116,12 @@ function server_call() {
 
 //creates new todo item and sends it to the server
 function add_user_input() {
+    date = $('#year').val() + '/' + $('#month').val() + '/' + $('#day').val() + ' ' + $('#hour').val() + ':' + $('#minute').val(); + $('#daylight').val();
     $('.todo').html('');
     var new_list_item = {};
     new_list_item.title = $('#title_info').val();
     new_list_item.details = $('#details_info').val();
-    new_list_item.timeStamp = $('#due_date').val();
+    new_list_item.timeStamp = date;
     new_list_item.id = user_object.id;
     $.ajax({
         url:'http://s-apis.learningfuze.com/todo/create',
@@ -131,9 +138,47 @@ function add_user_input() {
         }
     });
 }
-
+//creates date and time for modal
+function date_maker() {
+    var year_label = $('<label>').attr('for', 'year').text('Year');
+    var year = $('<select>').attr('id', 'year');
+    for (var i = 2015; i < 2025; i++) {
+        var option = $('<option>').val(i).html(i);
+        year.append(option);
+    }
+    var month_label = $('<label>').attr('for', 'month').text('Month');
+    var month = $('<select>').attr('id', 'month');
+    for (var i = 1; i < 13; i++) {
+        var option = $('<option>').val(i).html(i);
+        month.append(option);
+    }
+    var day_label = $('<label>').attr('for', 'day').text('Day');
+    var day = $('<select>').attr('id', 'day');
+    for (var i = 1; i < 32; i++) {
+        var option = $('<option>').val(i).html(i);
+        day.append(option);
+    }
+    var hour_label = $('<label>').attr('for', 'hour').text('Hour');
+    var hour = $('<select>').attr('id', 'hour');
+    for (var i = 1; i < 13; i++) {
+        var option = $('<option>').val(i).html(i);
+        hour.append(option);
+    }
+    var minute_label = $('<label>').attr('for', 'minute').text('Minute');
+    var minute = $('<select>').attr('id', 'minute');
+    for (var i = 1; i < 60; i++) {
+        var option = $('<option>').val(i).html(i);
+        minute.append(option);
+    }
+    var daylight = $('<select>').attr('id', 'daylight');
+    var am = $('<option>').val('AM').html('AM');
+    var pm = $('<option>').val('PM').html('PM');
+    daylight.append(am, pm)
+    $('.modal-body').append(month_label, month, day_label, day, year_label, year, hour_label, hour, minute_label, minute, daylight);
+}
 $(document).ready(function() {
     load_page();
+    date_maker();
     // server_call();
     $('#logout_btn').click(function() {
         logout();
