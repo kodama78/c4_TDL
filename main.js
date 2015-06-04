@@ -75,6 +75,7 @@ function user_login_server(user_object) {
 }
 
 //function that loads the page after login to the todo
+//TU - we should probably rename this function to a more specific page name//
 function load_page() {
     $.ajax({
         url: 'pages/login.html',
@@ -99,10 +100,32 @@ function load_page() {
                     }
                 });
             });
+             $('#account_create_initiator').click(function(){
+                console.log('create account clicked');
+                load_account_create_page();
+            });
         }
     });
 }
-
+//loads the account creation page on click of account_create_initiator button//
+function load_account_create_page(){
+            $.ajax({
+                url: 'pages/account_creation.html',
+                dataType: 'html',
+                method: 'GET',
+                cache: false,
+                success: function(response){
+                    $('.main_body').html('');
+                    $('.main_body').append(response);
+                    //account creation click function//
+                    $('#submit_account_btn').click(function(){
+                    account_object_create();
+                    $('.main_body').html('');
+                    console.log('user_account is ', user_account);
+                    });
+            }
+        });
+    }
 //function to log out user
 function logout() {
     console.log('in the logout function');
@@ -255,12 +278,7 @@ $(document).ready(function() {
     load_page();
     date_maker();
     // server_call();
-    //account creation click function//
-    $('#submit_account_btn').click(function(){
-    account_object_create();
-    console.log('user_account is ', user_account);
-    });
-
+   
     $('#logout_btn').click(function() {
         logout();
     });
