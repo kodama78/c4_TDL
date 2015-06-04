@@ -182,6 +182,9 @@ function create_list(array) {
         deleteBtn.on('click', function(e){
             deleteButton(this);
         });
+        //this space reserved to add the modal
+        
+        //this space reserved for the checkbox
         title.append(details, timestamp, deleteBtn);
         $('.list_items').append(title);
     }
@@ -236,7 +239,6 @@ function add_user_input() {
 
 //adds delete functionality to delete button
 function deleteButton(ele){
-    console.log('btn id:',$(ele).attr('id'));
     $.ajax({
     url: 'http://s-apis.learningfuze.com/todo/delete',
     dataType: 'json',
@@ -245,13 +247,14 @@ function deleteButton(ele){
     postId: $(ele).attr('id'),
     },  
     success: function(response){
-        console.log("response is", response);
-        console.log("success");
+        $('.list_items').html('');
+        todo_array = [];
+        server_call();
     },
-    error: function(response){
-        console.log("response is", response);
-        console.log("error");
-    }
+    // error: function(response){
+    //     console.log("response is", response);
+    //     console.log("error");
+    // }
     });
 }
 //creates date and time for modal
