@@ -12,7 +12,7 @@ STYLING FOR HEADER
 */
 header{
 	background: black;
-	#background: url('images/header.png');
+	/*#background: url('images/header.png');*/
 	border-bottom: 7px solid #CDCBD5;
 	top:0;	
 	width: 100%;
@@ -104,7 +104,7 @@ STYLING FOR MODAL
   	font-size: 39px;
 }
 .modal-dialog{
-	background: url('images/header.png');
+	/*background: url('images/header.png');*/
 	height: 80%;
 	border-radius: 10px;
 }
@@ -170,7 +170,7 @@ STYLING FOR FORM
 	width: 600px;
 	height: 50vh;
 	border-radius: 10px;
-	background: url('images/header1.png');
+	/*background: url('images/header1.png');*/
 	margin-top: 50px;
 	border-top: 10px solid #191919;
 	border-bottom: 10px solid #191919;
@@ -200,8 +200,8 @@ STYLING FOR FORM
 #username, #password {
 	border-radius: 10px;
 	border: none;
-	background: url('images/header1.png');
-	color: white;
+	/*background: url('images/header1.png');*/
+	color: black;
 	font-size: 18px;
 	   -moz-box-shadow:    inset 0 0 7px #191919;
    -webkit-box-shadow: inset 0 0 7px #191919;
