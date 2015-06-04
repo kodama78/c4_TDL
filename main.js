@@ -65,6 +65,11 @@ function user_login_server(user_object) {
             password: user_object.password
         },
         success: function(response) {
+            if (response.success == false){
+                console.log('login check returned', response);
+                load_page();
+                alert('wrong username or password... Please try again');
+            }
             logged_in = true;
             console.log('logged_in status is', logged_in);
             console.log("user login response is", response);
@@ -182,6 +187,9 @@ function create_list(array) {
         deleteBtn.on('click', function(e){
             deleteButton(this);
         });
+        //this space reserved to add the modal
+        
+        //this space reserved for the checkbox
         title.append(details, timestamp, deleteBtn);
         $('.list_items').append(title);
     }
@@ -236,7 +244,6 @@ function add_user_input() {
 
 //adds delete functionality to delete button
 function deleteButton(ele){
-    console.log('btn id:',$(ele).attr('id'));
     $.ajax({
     url: 'http://s-apis.learningfuze.com/todo/delete',
     dataType: 'json',
@@ -245,13 +252,14 @@ function deleteButton(ele){
     postId: $(ele).attr('id'),
     },  
     success: function(response){
-        console.log("response is", response);
-        console.log("success");
+        $('.list_items').html('');
+        todo_array = [];
+        server_call();
     },
-    error: function(response){
-        console.log("response is", response);
-        console.log("error");
-    }
+    // error: function(response){
+    //     console.log("response is", response);
+    //     console.log("error");
+    // }
     });
 }
 //creates date and time for modal
