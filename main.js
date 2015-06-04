@@ -91,18 +91,23 @@ function load_page() {
             cache: false,
             success: function(response) {
                 $('.main_body').html('');
-                $.ajax({
-                    url: 'pages/todo.html',
-                    dataType: 'html',
-                    method: 'GET',
-                    cache: false,
-                    success: function(response){
-                        console.log('response is', response)
-                        $('.main_body').html('');
-                        $('.main_body').append(response);
-                    }
-                });
-            }
+                $('.main_body').append(response);
+                $('#login_btn').click(function(){
+                    user_object_create();
+                    user_login_server(user_object);
+                    $('.main_body').html('');
+                    $.ajax({
+                        url: 'pages/todo.html',
+                        dataType: 'html',
+                        method: 'GET',
+                        cache: false,
+                        success: function(response){
+                            console.log('response is', response)
+                            $('.main_body').html('');
+                            $('.main_body').append(response);
+                        }
+                    });
+                }); 
              $('#account_create_initiator').click(function(){
                 console.log('create account clicked');
                 load_account_create_page();
@@ -236,7 +241,9 @@ function add_user_input() {
             details: new_list_item.details,
             userId: new_list_item.id,
         },
-        success: function(response) {}
+        success: function(response) {
+            
+        }
     });
 }
 
