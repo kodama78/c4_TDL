@@ -68,6 +68,7 @@ function user_login_server(user_object) {
             user_object.firstName = response.firstName;
             user_object.lastName = response.lastName;
             user_object.id = response.id;
+            user_object.sid = response.session_id;
             server_call();
         }
     });
@@ -104,7 +105,7 @@ function load_page() {
 
 //function to log out user
 function logout() {
-
+    console.log('in the logout function');
     $.ajax({
         url: 'http://s-apis.learningfuze.com/todo/logout',
         dataType: 'json',
@@ -113,14 +114,15 @@ function logout() {
         method: 'POST',
         data: {
             username: user_object.username,
+            sid: user_object.sid,
         },
         success: function(response) {
-            
+            console.log('logout response is ', response)
             user_object = {};
         },
-        error: function(response) {
+        // error: function(response) {
             
-        }
+        // }
     });
 }
 
