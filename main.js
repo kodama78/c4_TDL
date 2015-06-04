@@ -4,49 +4,49 @@ var user_account = {};
 // TU - I want to create a logged in default condition//
 var logged_in = false;
 // user account creation functionality //
-function account_object_create(){   
-    user_account.username = $('#username').val();
-    user_account.password = $('#password').val();
-    user_account.password_confirmation = $('#password_confirmation').val();
-    user_account.firstname = $('#account_firstname').val();
-    user_account.lastname = $('#account_lastname').val();
-    user_account.email = $('#account_email').val();
-//----------------------*NOTE* ---------------------//
-//we need more conditionals but we are just getting this up and running for now.// 
-//we still need conditionals for the username use, first & last name minimum charachters//
-//email validation//
-//password must be valid//
-//password confirmation conditional//
-    if (user_account.password_confirmation === user_account.password){
-        console.log('passwords match!');
-    } else if (user_account.password_confirmation != user_account.password){
-        console.log('the passwords do not match!');
-        user_account = {};
-        $('#password').val('');
-        $('#password_confirmation').val('');
-        $('#password_confirmation_modal').modal('show');
-    }
-    $.ajax({
-        url: 'http://s-apis.learningfuze.com/todo/newAccount',
-        dataType: 'JSON',
-        cache: false,
-        crossDomain: true,
-        method: 'POST',
-        data: {
-            username: user_account.username,
-            password: user_account.password,
-            password2: user_account.password_confirmation,
-            email: user_account.email,
-            firstName: user_account.firstname,
-            lastName: user_account.lastname
-        },
-        success:function(response){
-            console.log('response is ', response);
-            console.log('user_account is ', user_account);
+function account_object_create() {
+        user_account.username = $('#username').val();
+        user_account.password = $('#password').val();
+        user_account.password_confirmation = $('#password_confirmation').val();
+        user_account.firstname = $('#account_firstname').val();
+        user_account.lastname = $('#account_lastname').val();
+        user_account.email = $('#account_email').val();
+        //----------------------*NOTE* ---------------------//
+        //we need more conditionals but we are just getting this up and running for now.// 
+        //we still need conditionals for the username use, first & last name minimum charachters//
+        //email validation//
+        //password must be valid//
+        //password confirmation conditional//
+        if (user_account.password_confirmation === user_account.password) {
+            console.log('passwords match!');
+        } else if (user_account.password_confirmation != user_account.password) {
+            console.log('the passwords do not match!');
+            user_account = {};
+            $('#password').val('');
+            $('#password_confirmation').val('');
+            $('#password_confirmation_modal').modal('show');
         }
-    })
-}
-//creates the user object to log in to the server
+        $.ajax({
+            url: 'http://s-apis.learningfuze.com/todo/newAccount',
+            dataType: 'JSON',
+            cache: false,
+            crossDomain: true,
+            method: 'POST',
+            data: {
+                username: user_account.username,
+                password: user_account.password,
+                password2: user_account.password_confirmation,
+                email: user_account.email,
+                firstName: user_account.firstname,
+                lastName: user_account.lastname
+            },
+            success: function(response) {
+                console.log('response is ', response);
+                console.log('user_account is ', user_account);
+            }
+        })
+    }
+    //creates the user object to log in to the server
 function user_object_create() { //
     user_object.username = $('#username').val();
     user_object.password = $('#password').val();
@@ -80,16 +80,11 @@ function user_login_server(user_object) {
 //function that loads the page after login to the todo
 //TU - we should probably rename this function to a more specific page name//
 function load_page() {
-    $.ajax({
-        url: 'pages/login.html',
-        dataType: 'html',
-        cache: false,
-        success: function(response) {
-            $('.main_body').html('');
-            $('.main_body').append(response);
-            $('#login_btn').click(function() {
-                user_object_create();
-                user_login_server(user_object);
+        $.ajax({
+            url: 'pages/login.html',
+            dataType: 'html',
+            cache: false,
+            success: function(response) {
                 $('.main_body').html('');
                 $.ajax({
                     url: 'pages/todo.html',
@@ -112,25 +107,25 @@ function load_page() {
 }
 //loads the account creation page on click of account_create_initiator button and appends pages/account_creation.html //
 //to '.main_body'
-function load_account_create_page(){
-            $.ajax({
-                url: 'pages/account_creation.html',
-                dataType: 'html',
-                method: 'GET',
-                cache: false,
-                success: function(response){
-                    $('.main_body').html('');
-                    $('.main_body').append(response);
-                    //account creation click function//
-                    $('#submit_account_btn').click(function(){
-                    account_object_create();
-                    $('.main_body').html('');
-                    console.log('user_account is ', user_account);
-                    });
-            }
-        });
-    }
-//function to log out user
+function load_account_create_page() {
+    $.ajax({
+        url: 'pages/account_creation.html',
+        dataType: 'html',
+        method: 'GET',
+        cache: false,
+        success: function(response) {
+            $('.main_body').html('');
+            $('.main_body').append(response);
+            //account creation click function//
+            $('#submit_account_btn').click(function() {
+                account_object_create();
+                $('.main_body').html('');
+                console.log('user_account is ', user_account);
+            });
+        }
+    });
+}
+    //function to log out user
 function logout() {
     console.log('in the logout function');
     console.log(user_object);
@@ -161,7 +156,7 @@ function logout() {
 
         }
         // error: function(response) {
-            
+
         // }
     });
 }
@@ -179,11 +174,11 @@ function create_list(array) {
             type: 'button',
             text: 'Delete',
         });
-        deleteBtn.on('click', function(e){
+        deleteBtn.on('click', function(e) {
             deleteButton(this);
         });
         //this space reserved to add the modal
-        
+
         //this space reserved for the checkbox
         title.append(details, timestamp, deleteBtn);
         $('.list_items').append(title);
@@ -194,28 +189,32 @@ function create_list(array) {
 function server_call() {
     $.ajax({
         url: 'http://s-apis.learningfuze.com/todo/get',
-        dataType:'JSON',
+        dataType: 'JSON',
         data: {
-            userId:user_object.id
+            userId: user_object.id
         },
         cache: false,
         crossDomain: true,
-        method:'POST',
-        success:function(response){
-            // todo_list = response.data;
-            // console.log('todo_list', response);
-            // for (var i = 0; i < todo_list.length; i++){
-            //     todo_array.push(todo_list[i]);
-            // }
-            // create_list(todo_array);
+        method: 'POST',
+        success: function(response) {
+            if (response.success) {
+                todo_list = response.data;
+                for (var i = 0; i < todo_list.length; i++) {
+                    todo_array.push(todo_list[i]);
+                }
+                create_list(todo_array);
+            }
+            else{
+                alert('No user info found!');
+            }
         }
     });
 }
 
 //creates new todo item and sends it to the server
 function add_user_input() {
-    date = $('#year').val() + '/' + $('#month').val() + '/' + $('#day').val() + ' ' + 
-    $('#hour').val() + ':' + $('#minute').val()  + $('#daylight').val();
+    date = $('#year').val() + '/' + $('#month').val() + '/' + $('#day').val() + ' ' +
+        $('#hour').val() + ':' + $('#minute').val() + $('#daylight').val();
     $('.list_items').html('');
     var new_list_item = {};
     new_list_item.title = $('#title_info').val();
@@ -223,7 +222,7 @@ function add_user_input() {
     new_list_item.timeStamp = date;
     new_list_item.id = user_object.id;
     $.ajax({
-        url:'http://s-apis.learningfuze.com/todo/create',
+        url: 'http://s-apis.learningfuze.com/todo/create',
         method: 'POST',
         dataType: 'json',
         data: {
@@ -232,32 +231,31 @@ function add_user_input() {
             details: new_list_item.details,
             userId: new_list_item.id,
         },
-        success:function(response){
-        }
+        success: function(response) {}
     });
 }
 
 //adds delete functionality to delete button
-function deleteButton(ele){
-    $.ajax({
-    url: 'http://s-apis.learningfuze.com/todo/delete',
-    dataType: 'json',
-    method: 'POST',
-    data: {
-    postId: $(ele).attr('id'),
-    },  
-    success: function(response){
-        $('.list_items').html('');
-        todo_array = [];
-        server_call();
-    },
-    // error: function(response){
-    //     console.log("response is", response);
-    //     console.log("error");
-    // }
-    });
-}
-//creates date and time for modal
+function deleteButton(ele) {
+        $.ajax({
+            url: 'http://s-apis.learningfuze.com/todo/delete',
+            dataType: 'json',
+            method: 'POST',
+            data: {
+                postId: $(ele).attr('id'),
+            },
+            success: function(response) {
+                $('.list_items').html('');
+                todo_array = [];
+                server_call();
+            },
+            // error: function(response){
+            //     console.log("response is", response);
+            //     console.log("error");
+            // }
+        });
+    }
+    //creates date and time for modal
 function date_maker() {
     var year_label = $('<label>').attr('for', 'year').text('Year');
     var year = $('<select>').addClass("form-control").attr('id', 'year');
