@@ -102,7 +102,7 @@ function load_page() {
                         $('.main_body').append(response);
                     }
                 });
-            });
+            }
              $('#account_create_initiator').click(function(){
                 console.log('create account clicked');
                 load_account_create_page();
@@ -113,23 +113,23 @@ function load_page() {
 //loads the account creation page on click of account_create_initiator button and appends pages/account_creation.html //
 //to '.main_body'
 function load_account_create_page() {
-    $.ajax({
-        url: 'pages/account_creation.html',
-        dataType: 'html',
-        method: 'GET',
-        cache: false,
-        success: function(response) {
-            $('.main_body').html('');
-            $('.main_body').append(response);
-            //account creation click function//
-            $('#submit_account_btn').click(function() {
-                account_object_create();
+        $.ajax({
+            url: 'pages/account_creation.html',
+            dataType: 'html',
+            method: 'GET',
+            cache: false,
+            success: function(response) {
                 $('.main_body').html('');
-                console.log('user_account is ', user_account);
-            });
-        }
-    });
-}
+                $('.main_body').append(response);
+                //account creation click function//
+                $('#submit_account_btn').click(function() {
+                    account_object_create();
+                    $('.main_body').html('');
+                    console.log('user_account is ', user_account);
+                });
+            }
+        });
+    }
     //function to log out user
 function logout() {
     console.log('in the logout function');
