@@ -48,7 +48,6 @@ function account_object_create(){
 function user_object_create() { //
     user_object.username = $('#username').val();
     user_object.password = $('#password').val();
-    console.log('user_object is ', user_object);
 }
 
 //function to create user object from server reponse
@@ -64,10 +63,12 @@ function user_login_server(user_object) {
             password: user_object.password
         },
         success: function(response) {
-            console.log("response is", response);
+
+            console.log("user login response is", response);
             user_object.firstName = response.firstName;
             user_object.lastName = response.lastName;
             user_object.id = response.id;
+            server_call();
         }
     });
 }
@@ -114,11 +115,11 @@ function logout() {
             username: user_object.username,
         },
         success: function(response) {
-            console.log("response ", response);
+            
             user_object = {};
         },
         error: function(response) {
-            console.log("response ", response);
+            
         }
     });
 }
@@ -129,7 +130,6 @@ function create_list(array) {
         var title = $('<ul>').text(array[i].title);
         var details = $('<li>').text(array[i].details);
         var timestamp = $('<li>').text(array[i].timeStamp);
-        // var id = array[i].id;
         // var user_id = array[i].user_id;
         title.append(details, timestamp);
         $('.list_items').append(title);
@@ -148,19 +148,20 @@ function server_call() {
         crossDomain: true,
         method:'POST',
         success:function(response){
-            console.log('response is ', response);
-            todo_array.push(response.data[0]);
-            console.log('todo_array is ', todo_array)
+            todo_list = response.data;
+            for (var i = 0; i < todo_list.length; i++){
+                todo_array.push(todo_list[i]);
+            }
             create_list(todo_array);
-
         }
     });
 }
 
 //creates new todo item and sends it to the server
 function add_user_input() {
-    date = $('#year').val() + '/' + $('#month').val() + '/' + $('#day').val() + ' ' + $('#hour').val() + ':' + $('#minute').val(); + $('#daylight').val();
-    $('.todo').html('');
+    date = $('#year').val() + '/' + $('#month').val() + '/' + $('#day').val() + ' ' + 
+    $('#hour').val() + ':' + $('#minute').val()  + $('#daylight').val();
+    $('.list_items').html('');
     var new_list_item = {};
     new_list_item.title = $('#title_info').val();
     new_list_item.details = $('#details_info').val();
@@ -177,7 +178,6 @@ function add_user_input() {
             userId: new_list_item.id,
         },
         success:function(response){
-            console.log('response is', response);
         }
     });
 }
@@ -233,7 +233,6 @@ $(document).ready(function() {
         logout();
     });
     $('#add_item_btn').click(function() {
-        console.log('plus button clicked');
         $('#add_item_modal').modal('show');
     });
 
