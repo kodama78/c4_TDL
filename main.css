@@ -89,6 +89,7 @@ input{
 	border: none;
 }
 
+
 /*
 =================================
 STYLING FOR MODAL
@@ -100,6 +101,7 @@ STYLING FOR MODAL
   	font-size: 39px;
 }
 .modal-dialog{
+	background: gray;
 	/*background: url('images/header.png');*/
 	height: 80%;
 	border-radius: 10px;
@@ -111,6 +113,7 @@ input {
   	height: 10vh;
   	border-radius: 5px;
   	font-size: 20px;
+  	color: white;
 }
 
 input:focus, input:active {
@@ -214,7 +217,7 @@ STYLING FOR FORM
 	background-color: #FFFFFF;
 	width: 150px;
 	height: 50px;
-	margin-left: 90px;
+	margin-left: 5px;
 	#background: #C77D71;/*add*/
 	border:none;
 	transition: 0.5s;
@@ -241,5 +244,29 @@ STYLING FOR FORM
 STYLING FOR LIST
 =================================
 */
+.titled {
+	color: red;
+}
 
+.details {
+	color: black;
+}
+
+.timestamp {
+	color: gray;
+}
+
+/*
+=================================
+STYLING FOR ADD USER PAGE
+=================================
+*/
+#account_email {
+	width: 80%;
+}
+
+#account_firstname, #account_lastname {
+	width: 40%;
+	display: inline-block;
+}
 

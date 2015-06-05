@@ -172,9 +172,9 @@ function logout() {
 //creates list from todo_array
 function create_list(array) {
     for (var i = 0; i < array.length; i++) {
-        var title = $('<ul>').text(array[i].title);
-        var details = $('<li>').text(array[i].details);
-        var timestamp = $('<li>').text(array[i].timeStamp);
+        var title = $('<ul>').addClass('titled').text(array[i].title);
+        var details = $('<li>').addClass('details').text(array[i].details);
+        var timestamp = $('<li>').addClass('timestamp').text(array[i].timeStamp);
         // var user_id = array[i].user_id;
         var deleteBtn = $('<button>', {
             id: array[i].id,
