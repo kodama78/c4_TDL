@@ -90,8 +90,7 @@ function user_login_server(user_object) {
                 $('#logout_btn').hide();
                 alert('wrong username or password... Please try again');
             }
-            $('#logout_btn').show();
-            console.log("user login response is", response);
+            logged_in = true;
             user_object.firstName = response.firstName;
             user_object.lastName = response.lastName;
             user_object.id = response.id;
@@ -104,30 +103,30 @@ function user_login_server(user_object) {
 //function that loads the page after login to the todo
 //TU - we should probably rename this function to a more specific page name//
 function load_page() {
-        $.ajax({
-            url: 'pages/login.html',
-            dataType: 'html',
-            cache: false,
-            success: function(response) {
+    $.ajax({
+        url: 'pages/login.html',
+        dataType: 'html',
+        cache: false,
+        success: function(response) {
+            $('.main_body').html('');
+            $('.main_body').append(response);
+            $('#login_btn').click(function(){
+                user_object_create();
+                user_login_server(user_object);
                 $('.main_body').html('');
-                $('.main_body').append(response);
-                $('#login_btn').click(function(){
-                    user_object_create();
-                    user_login_server(user_object);
-                    $('.main_body').html('');
-                    $.ajax({
-                        url: 'pages/todo.html',
-                        dataType: 'html',
-                        method: 'GET',
-                        cache: false,
-                        success: function(response){
-                            console.log('response is', response)
-                            $('.main_body').html('');
-                            $('.main_body').append(response);
-                        }
-                    });
-                }); 
-             $('#account_create_initiator').click(function(){
+                $.ajax({
+                    url: 'pages/todo.html',
+                    dataType: 'html',
+                    method: 'GET',
+                    cache: false,
+                    success: function(response){
+                        console.log('response is', response)
+                        $('.main_body').html('');
+                        $('.main_body').append(response);
+                    }
+                });
+            }); 
+            $('#account_create_initiator').click(function(){
                 console.log('create account clicked');
                 load_account_create_page();
             });
@@ -137,23 +136,23 @@ function load_page() {
 //loads the account creation page on click of account_create_initiator button and appends pages/account_creation.html //
 //to '.main_body'
 function load_account_create_page() {
-        $.ajax({
-            url: 'pages/account_creation.html',
-            dataType: 'html',
-            method: 'GET',
-            cache: false,
-            success: function(response) {
+    $.ajax({
+        url: 'pages/account_creation.html',
+        dataType: 'html',
+        method: 'GET',
+        cache: false,
+        success: function(response) {
+            $('.main_body').html('');
+            $('.main_body').append(response);
+            //account creation click function//
+            $('#submit_account_btn').click(function() {
+                account_object_create();
                 $('.main_body').html('');
-                $('.main_body').append(response);
-                //account creation click function//
-                $('#submit_account_btn').click(function() {
-                    account_object_create();
-                    $('.main_body').html('');
-                    console.log('user_account is ', user_account);
-                });
-            }
-        });
-    }
+                console.log('user_account is ', user_account);
+            });
+        }
+    });
+}
     //function to log out user
 function logout() {
     console.log('in the logout function');
@@ -193,9 +192,9 @@ function logout() {
 //creates list from todo_array
 function create_list(array) {
     for (var i = 0; i < array.length; i++) {
-        var title = $('<ul>').text(array[i].title);
-        var details = $('<li>').text(array[i].details);
-        var timestamp = $('<li>').text(array[i].timeStamp);
+        var title = $('<ul>').addClass('titled').text(array[i].title);
+        var details = $('<li>').addClass('details').text(array[i].details);
+        var timestamp = $('<li>').addClass('timestamp').text(array[i].timeStamp);
         // var user_id = array[i].user_id;
         var deleteBtn = $('<button>', {
             id: array[i].id,
@@ -226,13 +225,11 @@ function server_call() {
         crossDomain: true,
         method: 'POST',
         success: function(response) {
-            if (response.success) {
-                todo_list = response.data;
-                for (var i = 0; i < todo_list.length; i++) {
-                    todo_array.push(todo_list[i]);
-                }
-                create_list(todo_array);
+            todo_list = response.data;
+            for (var i = 0; i < todo_list.length; i++) {
+                todo_array.push(todo_list[i]);
             }
+            create_list(todo_array);           
         }
     });
 }
@@ -247,6 +244,7 @@ function add_user_input() {
     new_list_item.details = $('#details_info').val();
     new_list_item.timeStamp = date;
     new_list_item.id = user_object.id;
+    console.log('new todo item is ', new_list_item); 
     $.ajax({
         url: 'http://s-apis.learningfuze.com/todo/create',
         method: 'POST',
@@ -257,8 +255,11 @@ function add_user_input() {
             details: new_list_item.details,
             userId: new_list_item.id,
         },
+
         success: function(response) {
-            
+            console.log('user input response is', response);
+            todo_array = [];
+            server_call();
         }
     });
 }
@@ -327,16 +328,15 @@ $(document).ready(function() {
     $('#logout_btn').hide();
     // server_call();
     $('#logout_btn').click(function() {
-                console.log('logout clicked');
-                logout();
+        console.log('logout clicked');
+        logout();
     });
 
     $('#add_item_btn').click(function() {
         $('#add_item_modal').modal('show');
     });
 
-    $('#submit_info').click(function() {
+    $('#submit_info').click(function() { 
         add_user_input();
-        server_call();
     });
 });
