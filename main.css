@@ -1,4 +1,3 @@
-@import url(http://fonts.googleapis.com/css?family=Architects+Daughter);
 @import url(http://fonts.googleapis.com/css?family=Permanent+Marker);
 @import url(http://fonts.googleapis.com/css?family=Roboto);
 
@@ -278,7 +277,11 @@ STYLING FOR FORM
 	color: #BF4D28;
 }
 
-
+.btn-warning {
+	width: 15%;
+	margin-left: 10px;
+	height: 42px;
+}
 
 /*
 =================================
@@ -306,6 +309,10 @@ STYLING FOR LIST
 ol, ul {
   margin-top: 3px;
   margin-bottom: 58px;
+}
+
+.fa-pencil-square-o {
+	font-size: 18px;
 }
 /*
 =================================
@@ -363,9 +370,8 @@ STYLING FOR ADD USER PAGE
 	background: url('images/header1.png');
 	border-top: 8px solid black;
 	margin-bottom: 0;
-	
-    #position: absolute;
-    #left: -33px;
+  	position: absolute;
+  	left: -135px;
 }
 
 .line {
