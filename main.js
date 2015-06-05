@@ -186,10 +186,16 @@ function create_list(array) {
         deleteBtn.on('click', function(e) {
             deleteButton(this);
         });
+        var editBtn = $('<button>', {
+            id: array[i].id,
+            class: 'btn col-md-2 list',
+            type: 'button',
+            text: 'edit'
+        })
         //this space reserved to add the modal
 
         //this space reserved for the checkbox
-        title.append(timestamp, details, deleteBtn);
+        title.append(timestamp, details, deleteBtn, editBtn);
         $('.list_items').append(title);
     }
 }
