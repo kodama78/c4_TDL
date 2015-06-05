@@ -211,9 +211,9 @@ function create_list(array) {
         });
         var editBtn = $('<button>', {
             id: array[i].id,
-            class: 'btn col-md-2 list',
+            class: 'btn btn-warning col-md-2 list fa fa-pencil-square-o fa-3x',
             type: 'button',
-            text: 'edit'
+            text: ''
         })
         //this space reserved to add the modal
 
@@ -361,7 +361,6 @@ function date_maker() {
 $(document).ready(function() {
     load_page();
     date_maker();
-    $('#logout_btn').hide();
     // server_call();
     $('#logout_btn').click(function() {
         console.log('logout clicked');
