@@ -302,6 +302,11 @@ STYLING FOR LIST
 .btn-danger {
 	font-size: 20px;
 }
+
+ol, ul {
+  margin-top: 3px;
+  margin-bottom: 58px;
+}
 /*
 =================================
 STYLING FOR ADD USER PAGE
