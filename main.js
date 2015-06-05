@@ -11,6 +11,8 @@ function account_object_create() {
         user_account.firstname = $('#account_firstname').val();
         user_account.lastname = $('#account_lastname').val();
         user_account.email = $('#account_email').val();
+        user_object.username = $('#username').val();
+        user_object.password = $('#password').val();
         //----------------------*NOTE* ---------------------//
         //we need more conditionals but we are just getting this up and running for now.// 
         //we still need conditionals for the username use, first & last name minimum charachters//
@@ -42,6 +44,7 @@ function account_object_create() {
             },
 //here we want to let the user know that the username is already taken, then redirect them to the account creation page//
             success: function(response) {
+                user_login_server(user_object);
                 if(response.success == false){
                     alert(response.errors[0]);
                      $.ajax({
