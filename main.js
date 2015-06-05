@@ -1,8 +1,8 @@
 var todo_array = [];
 var user_object = {};
 var user_account = {};
-// TU - I want to create a logged in default condition//
 var logged_in = false;
+// TU - I want to create a logged in default condition//
 // user account creation functionality //
 function account_object_create() {
         user_account.username = $('#username').val();
@@ -68,10 +68,10 @@ function user_login_server(user_object) {
             if (response.success == false){
                 console.log('login check returned', response);
                 load_page();
+                $('#logout_btn').hide();
                 alert('wrong username or password... Please try again');
             }
-            logged_in = true;
-            console.log('logged_in status is', logged_in);
+            $('#logout_btn').show();
             console.log("user login response is", response);
             user_object.firstName = response.firstName;
             user_object.lastName = response.lastName;
@@ -214,9 +214,6 @@ function server_call() {
                 }
                 create_list(todo_array);
             }
-            else{
-                alert('No user info found!');
-            }
         }
     });
 }
@@ -308,6 +305,7 @@ function date_maker() {
 $(document).ready(function() {
     load_page();
     date_maker();
+    $('#logout_btn').hide();
     // server_call();
     $('#logout_btn').click(function() {
                 console.log('logout clicked');
