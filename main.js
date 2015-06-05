@@ -180,7 +180,7 @@ function logout() {
                     crossDomain: true,
                     cache: false
                 });
-
+                todo_array = [];
                 user_object = {};
                 $('.main_body').html('');
                 $('.main_body').append(response);
@@ -196,10 +196,11 @@ function logout() {
 //creates list from todo_array
 function create_list(array) {
     for (var i = 0; i < array.length; i++) {
-        var title = $('<ul>').addClass('titled').text(array[i].title);
+        var title = $('<ul>');
+        var span = $('<span>').addClass('titled').text(array[i].title)
         var details = $('<li>').addClass('details').text(array[i].details);
         var timestamp = $('<li>').addClass('timestamp').text(array[i].timeStamp);
-        // var user_id = array[i].user_id;
+        var user_id = $('<li>').addClass('userId hide').text(array[i].userId);
         var deleteBtn = $('<button>', {
             id: array[i].id,
             class: 'btn btn-danger col-md-2 list',
@@ -215,14 +216,45 @@ function create_list(array) {
             type: 'button',
             text: 'edit'
         })
+        editBtn.click(function(e){
+            edit_item(this);
+        });
         //this space reserved to add the modal
 
         //this space reserved for the checkbox
-        title.append(timestamp, details, deleteBtn, editBtn);
+        title.append(span, timestamp, details, deleteBtn, editBtn, user_id);
         $('.list_items').append(title);
     }
 }
+function edit_item(ele){
+    // console.log('element ID is ',$(ele).attr('id'));
+    // console.log('element title is ',$(ele).parent().find('.titled').text());
+    // console.log('element dueDate is ',$(ele).parent().find('.timestamp').text());
+    // console.log('element details is ',$(ele).parent().find('.details').text());
+    // console.log('element userID is ',$(ele).parent().find('.userId').text());
 
+
+    $.ajax({
+            url: 'http://s-apis.learningfuze.com/todo/update',
+            dataType: 'json',
+            method: 'POST',
+            data: {
+                postId: $(ele).attr('id'),
+                title: $(ele).parent().find('.titled').text(),
+                dueDate: $(ele).parent().find('.timestamp').text(),
+                details:$(ele).parent().find('.details').text(),
+                userId: $(ele).parent().find('.userId').text(),
+            },
+            success: function(response) {
+                console.log('edit button clicked, response is', response);
+            },
+            // error: function(response){
+            //     console.log("response is", response);
+            //     console.log("error");
+            // }
+        });
+
+}
 //function that queries the server for the todo list info
 function server_call() {
     $.ajax({
