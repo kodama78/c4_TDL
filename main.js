@@ -11,6 +11,8 @@ function account_object_create() {
         user_account.firstname = $('#account_firstname').val();
         user_account.lastname = $('#account_lastname').val();
         user_account.email = $('#account_email').val();
+        user_object.username = $('#username').val();
+        user_object.password = $('#password').val();
         //----------------------*NOTE* ---------------------//
         //we need more conditionals but we are just getting this up and running for now.// 
         //we still need conditionals for the username use, first & last name minimum charachters//
@@ -42,6 +44,7 @@ function account_object_create() {
             },
 //here we want to let the user know that the username is already taken, then redirect them to the account creation page//
             success: function(response) {
+                user_login_server(user_object);
                 if(response.success == false){
                     alert(response.errors[0]);
                      $.ajax({
@@ -84,14 +87,14 @@ function user_login_server(user_object) {
             password: user_object.password
         },
         success: function(response) {
-            if (response.success == false){
+            if (response.success == false) {
                 console.log('login check returned', response);
                 load_page();
                 $('#logout_btn').hide();
                 alert('wrong username or password... Please try again');
             }
-            $('#logout_btn').show();
-            console.log("user login response is", response);
+            console.log('response is', response);
+            logged_in = true;
             user_object.firstName = response.firstName;
             user_object.lastName = response.lastName;
             user_object.id = response.id;
@@ -111,7 +114,7 @@ function load_page() {
             success: function(response) {
                 $('.main_body').html('');
                 $('.main_body').append(response);
-                $('#login_btn').click(function(){
+                $('#login_btn').click(function() {
                     user_object_create();
                     user_login_server(user_object);
                     $('.main_body').html('');
@@ -120,22 +123,22 @@ function load_page() {
                         dataType: 'html',
                         method: 'GET',
                         cache: false,
-                        success: function(response){
+                        success: function(response) {
                             console.log('response is', response)
                             $('.main_body').html('');
                             $('.main_body').append(response);
                         }
                     });
-                }); 
-             $('#account_create_initiator').click(function(){
-                console.log('create account clicked');
-                load_account_create_page();
-            });
-        }
-    });
-}
-//loads the account creation page on click of account_create_initiator button and appends pages/account_creation.html //
-//to '.main_body'
+                });
+                $('#account_create_initiator').click(function() {
+                    console.log('create account clicked');
+                    load_account_create_page();
+                });
+            }
+        });
+    }
+    //loads the account creation page on click of account_create_initiator button and appends pages/account_creation.html //
+    //to '.main_body'
 function load_account_create_page() {
         $.ajax({
             url: 'pages/account_creation.html',
@@ -169,22 +172,22 @@ function logout() {
             sid: user_object.sid,
         },
         success: function(response) {
-            console.log('logout response is ', response);
-            $.ajax({
-                url: 'pages/login.html',
-                dataType: 'html',
-                method: 'GET',
-                crossDomain: true,
-                cache: false
-            });
+                console.log('logout response is ', response);
+                $.ajax({
+                    url: 'pages/login.html',
+                    dataType: 'html',
+                    method: 'GET',
+                    crossDomain: true,
+                    cache: false
+                });
 
-            user_object = {};
-            $('.main_body').html('');
-            $('.main_body').append(response);
-            load_page();
+                user_object = {};
+                $('.main_body').html('');
+                $('.main_body').append(response);
+                load_page();
 
-        }
-        // error: function(response) {
+            }
+            // error: function(response) {
 
         // }
     });
@@ -193,15 +196,15 @@ function logout() {
 //creates list from todo_array
 function create_list(array) {
     for (var i = 0; i < array.length; i++) {
-        var title = $('<ul>').text(array[i].title);
-        var details = $('<li>').text(array[i].details);
-        var timestamp = $('<li>').text(array[i].timeStamp);
+        var title = $('<ul>').addClass('titled').text(array[i].title);
+        var details = $('<li>').addClass('details').text(array[i].details);
+        var timestamp = $('<li>').addClass('timestamp').text(array[i].timeStamp);
         // var user_id = array[i].user_id;
         var deleteBtn = $('<button>', {
             id: array[i].id,
             class: 'btn btn-danger col-md-2 list',
             type: 'button',
-            text: 'Delete',
+            text: 'x',
         });
         deleteBtn.on('click', function(e) {
             deleteButton(this);
@@ -209,7 +212,7 @@ function create_list(array) {
         //this space reserved to add the modal
 
         //this space reserved for the checkbox
-        title.append(details, timestamp, deleteBtn);
+        title.append(timestamp, details, deleteBtn);
         $('.list_items').append(title);
     }
 }
@@ -226,6 +229,7 @@ function server_call() {
         crossDomain: true,
         method: 'POST',
         success: function(response) {
+            console.log('server_call response is', response);
             if (response.success) {
                 todo_list = response.data;
                 for (var i = 0; i < todo_list.length; i++) {
@@ -242,6 +246,7 @@ function add_user_input() {
     date = $('#year').val() + '/' + $('#month').val() + '/' + $('#day').val() + ' ' +
         $('#hour').val() + ':' + $('#minute').val() + $('#daylight').val();
     $('.list_items').html('');
+    console.log('date is', date);
     var new_list_item = {};
     new_list_item.title = $('#title_info').val();
     new_list_item.details = $('#details_info').val();
@@ -257,9 +262,15 @@ function add_user_input() {
             details: new_list_item.details,
             userId: new_list_item.id,
         },
+
         success: function(response) {
-            
-        }
+                console.log('success in add_user_input function is', response);
+                todo_array = [];
+                server_call();
+            }
+            // error: function(response) {
+            //     console.log('error in add_user_input function', response);
+            // }
     });
 }
 
@@ -294,26 +305,46 @@ function date_maker() {
     var month_label = $('<label>').attr('for', 'month').text('Month');
     var month = $('<select>').addClass("form-control").attr('id', 'month');
     for (var i = 1; i < 13; i++) {
-        var option = $('<option>').val(i).html(i);
-        month.append(option);
+        if (i < 10) {
+            var option = $('<option>').val('0' + i).html('0' + i);
+            month.append(option);
+        } else {
+            var option = $('<option>').val(i).html(i);
+            month.append(option);
+        }
     }
     var day_label = $('<label>').attr('for', 'day').text('Day');
     var day = $('<select>').addClass("form-control").attr('id', 'day');
     for (var i = 1; i < 32; i++) {
-        var option = $('<option>').val(i).html(i);
-        day.append(option);
+        if (i < 10) {
+            var option = $('<option>').val('0' + i).html('0' + i);
+            day.append(option);
+        } else {
+            var option = $('<option>').val(i).html(i);
+            day.append(option);
+        }
     }
     var hour_label = $('<label>').attr('for', 'hour').text('Hour');
     var hour = $('<select>').addClass("form-control").attr('id', 'hour');
     for (var i = 1; i < 13; i++) {
-        var option = $('<option>').val(i).html(i);
-        hour.append(option);
+        if (i < 10) {
+            var option = $('<option>').val('0' + i).html('0' + i);
+            hour.append(option);
+        } else {
+            var option = $('<option>').val(i).html(i);
+            hour.append(option);
+        }
     }
     var minute_label = $('<label>').attr('for', 'minute').text('Minute');
     var minute = $('<select>').addClass("form-control").attr('id', 'minute');
     for (var i = 1; i < 60; i++) {
-        var option = $('<option>').val(i).html(i);
-        minute.append(option);
+        if (i < 10) {
+            var option = $('<option>').val('0' + i).html('0' + i);
+            minute.append(option);
+        } else {
+            var option = $('<option>').val(i).html(i);
+            minute.append(option);
+        }
     }
     var daylight = $('<select>').addClass("form-control").attr('id', 'daylight');
     var am = $('<option>').val('AM').html('AM');
@@ -327,8 +358,8 @@ $(document).ready(function() {
     $('#logout_btn').hide();
     // server_call();
     $('#logout_btn').click(function() {
-                console.log('logout clicked');
-                logout();
+        console.log('logout clicked');
+        logout();
     });
 
     $('#add_item_btn').click(function() {
@@ -337,6 +368,5 @@ $(document).ready(function() {
 
     $('#submit_info').click(function() {
         add_user_input();
-        server_call();
     });
 });

@@ -1,9 +1,16 @@
 @import url(http://fonts.googleapis.com/css?family=Architects+Daughter);
-
+@import url(http://fonts.googleapis.com/css?family=Permanent+Marker);
+@import url(http://fonts.googleapis.com/css?family=Roboto);
 
 body{
-	font-family: 'Special Elite';
+	font-family: 'Permanent Marker';
 	background: url('images/background.png');
+}
+
+html, body {
+  padding: 0;
+  margin: 0;
+  overflow-x: hidden;
 }
 /*
 =================================
@@ -12,12 +19,13 @@ STYLING FOR HEADER
 */
 header{
 	background: black;
-	/*#background: url('images/header.png');*/
+	background: url('images/header.png');
 	border-bottom: 7px solid #CDCBD5;
 	top:0;	
 	width: 100%;
-	height: 30vh;
-	position: absolute;
+	height: 200px;
+	#position: fixed;
+	margin-bottom: 10px;
 }
 
 .logout {
@@ -48,7 +56,7 @@ header{
 
 .title {
 	text-align: center;
-	color: white; 
+	color: #4D4648; 
 	position: relative;
 	top: 20%;
 	font-size: 5em;
@@ -58,7 +66,7 @@ header{
 	position: absolute;
 	background: #CDCBD5;
 	border-radius: 50%;
-	top: 13%;
+	top: 6%;
 	right: 3%;
 	transition: 0.5s;
 }
@@ -80,6 +88,8 @@ ul li{
 	font-size: 20px;
 }
 
+
+
 /*
 =================================
 STYLING FOR HEADER
@@ -88,6 +98,7 @@ STYLING FOR HEADER
 input{
 	border: none;
 }
+
 
 /*
 =================================
@@ -100,7 +111,8 @@ STYLING FOR MODAL
   	font-size: 39px;
 }
 .modal-dialog{
-	/*background: url('images/header.png');*/
+	#background: gray;
+	background: url('images/header.png');
 	height: 80%;
 	border-radius: 10px;
 }
@@ -108,9 +120,11 @@ STYLING FOR MODAL
 input {
 	background: rgba(58,49,55, 0.6);
 	width: 100%;
-  	height: 10vh;
+  	height: 50px;
   	border-radius: 5px;
   	font-size: 20px;
+  	color: white;
+  	text-indent: 13px;
 }
 
 input:focus, input:active {
@@ -119,10 +133,11 @@ input:focus, input:active {
 h4, label {
 	color:white;
 }
-
+/*user name & pssword box*/
 .main_body {
-	top:40%;
-	position: absolute;
+  top: 35%;
+  left: 17%;
+  position: absolute;
 }
 
 #title_info::-webkit-input-placeholder {
@@ -146,22 +161,22 @@ button:focus, button:active {
 
 #submit_info {
 	width: 200px;
-	height: 10vh;
+	height: 50px;
 	font-size: 20px;
-	#background: #C77D71;/*add*/
+	background: #BF4D28;/*add*/
 	border: none;
 	transition: 0.5s;
 }
 
 #submit_info:hover {
-	#background: #E69F81;/*add*/
+	background: #C55F3D;/*add*/
 }
 
 #year, #month, #day {
   width: 89px;
   height: 40px;
   font-size: 15px;
-  #background: gray;
+  background: gray;
   border: none;
   display: inline-block;
   margin: 18px;
@@ -186,9 +201,9 @@ STYLING FOR FORM
 */
 .form_container {
 	width: 600px;
-	height: 50vh;
+	height: 300px;
 	border-radius: 10px;
-	/*background: url('images/header1.png');*/
+	background: url('images/header1.png');
 	margin-top: 50px;
 	border-top: 10px solid #191919;
 	border-bottom: 10px solid #191919;
@@ -201,45 +216,156 @@ STYLING FOR FORM
 }
 
 .btn-success {
-	color: #333;
+	font-size: 20px;
+	color: #8A371D !important;
 	width: 150px;
 	height: 50px;
 	margin-left: 90px;
-	#background: #C77D71;/*add*/
-	border:none;
-	transition: 0.5s;
+	background: none !important;
+	#background: #8A371D !important;/*add*/
+	border: 4px solid #8A371D !important;
+	transition: 2s;
 	display: inline;
 }
-.btn-info{
-	background-color: #FFFFFF;
-	width: 150px;
-	height: 50px;
-	margin-left: 90px;
-	#background: #C77D71;/*add*/
-	border:none;
-	transition: 0.5s;
-	display: inline;
-	color: black;  
-}
+
 .btn-success:hover {
-	color: #333;
-	#background: #E69F81;
+	color: #BF4D28 !important;
+	#background: #BF4D28 !important;
+	background: none;
+	border: 4px inset #BF4D28 !important;
 }
+
+.btn-success:before {
+	color: #BF4D28 !important;
+	#background: #BF4D28 !important;
+	background: none;
+	border: 4px inset #BF4D28 !important;
+}
+
+.btn-info{
+	font-size: 20px;
+	background-color: #FFFFFF;
+	width: 180px;
+	height: 50px;
+	margin-left: 5px;
+	#background: #789048 !important;/*add*/
+	background: none !important;
+	border: 4px solid #789048 !important;
+	transition: 2s;
+	display: inline;
+	color: #789048 !important;  
+}
+.btn-info:hover {
+	color: #C0D860 !important;
+	#background: #C0D860 !important;
+	background: none;
+	border: 4px outset #C0D860 !important; 
+}
+
 #username, #password {
 	border-radius: 10px;
 	border: none;
-	/*background: url('images/header1.png');*/
-	color: black;
+	letter-spacing: 4px;
+	background: url('images/header1.png');
+	color: #BF4D28;
 	font-size: 18px;
 	   -moz-box-shadow:    inset 0 0 7px #191919;
    -webkit-box-shadow: inset 0 0 7px #191919;
    box-shadow:         inset 0 0 7px #191919;
 }
 
+#password {
+	color: #BF4D28;
+}
+
+
+
 /*
 =================================
 STYLING FOR LIST
 =================================
 */
+.titled {
+  color: #BF4D28;
+  letter-spacing: 5px;
+}
+
+.details {
+  color: rgb(68, 68, 68);
+}
+
+.timestamp {
+  color: gray;
+  font-size: 15px;
+}
+
+.btn-danger {
+	font-size: 20px;
+}
+/*
+=================================
+STYLING FOR ADD USER PAGE
+=================================
+*/
+.sign_up {
+  color: white;
+  letter-spacing: 5px;
+  font-size: 42px;
+  margin-left: 90px;
+}
+
+#account_email {
+  width: 80%;
+  background: url('images/bue.png');
+  border: none;
+  color: white;
+  font-size: 20px;
+  letter-spacing: 5px;
+  		   -moz-box-shadow:    inset 0 0 7px #23282d;
+   -webkit-box-shadow: inset 0 0 7px #23282d;
+   box-shadow:         inset 0 0 7px #23282d;
+}
+
+#account_firstname, #account_lastname {
+  width: 39.7%;
+  margin-left: 0;
+  top: 7px;
+  left: 90px;
+  position: relative;
+  display: inline-block;
+  background: url('images/bue.png');
+  border: none;
+  color: white;
+  font-size: 20px;
+  letter-spacing: 5px;
+
+}
+
+#password_confirmation {
+	background: url('images/header1.png');
+	border: none;
+	font-size: 18px;
+	color: #BF4D28;
+	letter-spacing: 4px;
+		   -moz-box-shadow:    inset 0 0 7px #191919;
+   -webkit-box-shadow: inset 0 0 7px #191919;
+   box-shadow:         inset 0 0 7px #191919;
 
 
+}
+
+.container {
+	background: url('images/header1.png');
+	border-top: 8px solid black;
+	margin-bottom: 0;
+	
+    #position: absolute;
+    #left: -33px;
+}
+
+.line {
+	background: black;
+	height: 3px;
+	width: 99%;
+	margin: 15px;
+}
