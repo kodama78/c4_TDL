@@ -205,12 +205,11 @@ function server_call() {
         crossDomain: true,
         method: 'POST',
         success: function(response) {
-                todo_list = response.data;
-                for (var i = 0; i < todo_list.length; i++) {
-                    todo_array.push(todo_list[i]);
-                }
-                create_list(todo_array);
-            
+            todo_list = response.data;
+            for (var i = 0; i < todo_list.length; i++) {
+                todo_array.push(todo_list[i]);
+            }
+            create_list(todo_array);           
         }
     });
 }
