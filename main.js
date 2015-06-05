@@ -205,6 +205,7 @@ function server_call() {
         crossDomain: true,
         method: 'POST',
         success: function(response) {
+            console.log('server_call response is', response);
             todo_list = response.data;
             for (var i = 0; i < todo_list.length; i++) {
                 todo_array.push(todo_list[i]);
@@ -219,12 +220,12 @@ function add_user_input() {
     date = $('#year').val() + '/' + $('#month').val() + '/' + $('#day').val() + ' ' +
         $('#hour').val() + ':' + $('#minute').val() + $('#daylight').val();
     $('.list_items').html('');
+    console.log('date is', date);
     var new_list_item = {};
     new_list_item.title = $('#title_info').val();
     new_list_item.details = $('#details_info').val();
     new_list_item.timeStamp = date;
     new_list_item.id = user_object.id;
-    console.log('new todo item is ', new_list_item); 
     $.ajax({
         url: 'http://s-apis.learningfuze.com/todo/create',
         method: 'POST',
@@ -237,10 +238,13 @@ function add_user_input() {
         },
 
         success: function(response) {
-            console.log('user input response is', response);
+            console.log('success in add_user_input function');
             todo_array = [];
             server_call();
         }
+        // error: function(response) {
+        //     console.log('error in add_user_input function', response);
+        // }
     });
 }
 
@@ -269,32 +273,56 @@ function date_maker() {
     var year_label = $('<label>').attr('for', 'year').text('Year');
     var year = $('<select>').addClass("form-control").attr('id', 'year');
     for (var i = 2015; i < 2025; i++) {
-        var option = $('<option>').val(i).html(i);
-        year.append(option);
+            var option = $('<option>').val(i).html(i);
+            year.append(option);  
     }
     var month_label = $('<label>').attr('for', 'month').text('Month');
     var month = $('<select>').addClass("form-control").attr('id', 'month');
     for (var i = 1; i < 13; i++) {
-        var option = $('<option>').val(i).html(i);
-        month.append(option);
+        if (i < 10){
+            var option = $('<option>').val('0'+i).html('0'+i);
+            month.append(option);
+        }
+        else{
+            var option = $('<option>').val(i).html(i);
+            month.append(option);
+        }   
     }
     var day_label = $('<label>').attr('for', 'day').text('Day');
     var day = $('<select>').addClass("form-control").attr('id', 'day');
     for (var i = 1; i < 32; i++) {
-        var option = $('<option>').val(i).html(i);
-        day.append(option);
+        if (i < 10){
+            var option = $('<option>').val('0'+i).html('0'+i);
+            day.append(option);
+        }
+        else{
+            var option = $('<option>').val(i).html(i);
+            day.append(option);
+        }
     }
     var hour_label = $('<label>').attr('for', 'hour').text('Hour');
     var hour = $('<select>').addClass("form-control").attr('id', 'hour');
     for (var i = 1; i < 13; i++) {
-        var option = $('<option>').val(i).html(i);
-        hour.append(option);
+        if (i < 10){
+            var option = $('<option>').val('0'+i).html('0'+i);
+            hour.append(option);
+        }
+        else{
+            var option = $('<option>').val(i).html(i);
+            hour.append(option);
+        }
     }
     var minute_label = $('<label>').attr('for', 'minute').text('Minute');
     var minute = $('<select>').addClass("form-control").attr('id', 'minute');
     for (var i = 1; i < 60; i++) {
-        var option = $('<option>').val(i).html(i);
-        minute.append(option);
+        if (i < 10){
+            var option = $('<option>').val('0'+i).html('0'+i);
+            minute.append(option);
+        }
+        else{
+            var option = $('<option>').val(i).html(i);
+            minute.append(option);
+    }
     }
     var daylight = $('<select>').addClass("form-control").attr('id', 'daylight');
     var am = $('<option>').val('AM').html('AM');
