@@ -1,8 +1,8 @@
 var todo_array = [];
 var user_object = {};
 var user_account = {};
-// TU - I want to create a logged in default condition//
 var logged_in = false;
+// TU - I want to create a logged in default condition//
 // user account creation functionality //
 function account_object_create() {
         user_account.username = $('#username').val();
@@ -11,6 +11,8 @@ function account_object_create() {
         user_account.firstname = $('#account_firstname').val();
         user_account.lastname = $('#account_lastname').val();
         user_account.email = $('#account_email').val();
+        user_object.username = $('#username').val();
+        user_object.password = $('#password').val();
         //----------------------*NOTE* ---------------------//
         //we need more conditionals but we are just getting this up and running for now.// 
         //we still need conditionals for the username use, first & last name minimum charachters//
@@ -40,12 +42,32 @@ function account_object_create() {
                 firstName: user_account.firstname,
                 lastName: user_account.lastname
             },
+//here we want to let the user know that the username is already taken, then redirect them to the account creation page//
             success: function(response) {
-                console.log('response is ', response);
-                console.log('user_account is ', user_account);
+                user_login_server(user_object);
+                if(response.success == false){
+                    alert(response.errors[0]);
+                     $.ajax({
+                        url: 'pages/account_creation.html',
+                        dataType: 'html',
+                        method: 'GET',
+                        cache: false,
+                        success: function(response) {
+                            $('.main_body').html('');
+                            $('.main_body').append(response);
+                            //account creation click function//
+                            $('#submit_account_btn').click(function() {
+                            account_object_create();
+                            $('.main_body').html('');
+                            console.log('user_account is ', user_account);
+                        });
+                    }
+                });
             }
-        })
-    }
+        }
+    });
+ }
+
     //creates the user object to log in to the server
 function user_object_create() { //
     user_object.username = $('#username').val();
@@ -68,6 +90,7 @@ function user_login_server(user_object) {
             if (response.success == false) {
                 console.log('login check returned', response);
                 load_page();
+                $('#logout_btn').hide();
                 alert('wrong username or password... Please try again');
             }
             console.log('response is', response);
@@ -332,6 +355,7 @@ function date_maker() {
 $(document).ready(function() {
     load_page();
     date_maker();
+    $('#logout_btn').hide();
     // server_call();
     $('#logout_btn').click(function() {
         console.log('logout clicked');
