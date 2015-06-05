@@ -41,11 +41,21 @@ function account_object_create() {
                 lastName: user_account.lastname
             },
             success: function(response) {
-                console.log('response is ', response);
-                console.log('user_account is ', user_account);
+                if(response.success == false){
+                    alert(response.errors[0]);
+                    $.ajax({
+                        url: 'pages/account_creation.html',
+                        dataType: 'JSON',
+                        cache: false,
+                        crossDomain: true,
+                        method: 'POST'
+                        });
+                        console.log('response is ', response);
+                        console.log('user_account is ', user_account);
             }
-        })
-    }
+        }
+    });
+}
     //creates the user object to log in to the server
 function user_object_create() { //
     user_object.username = $('#username').val();
