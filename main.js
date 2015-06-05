@@ -180,7 +180,7 @@ function create_list(array) {
             id: array[i].id,
             class: 'btn btn-danger col-md-2 list',
             type: 'button',
-            text: 'Delete',
+            text: 'x',
         });
         deleteBtn.on('click', function(e) {
             deleteButton(this);
@@ -188,7 +188,7 @@ function create_list(array) {
         //this space reserved to add the modal
 
         //this space reserved for the checkbox
-        title.append(details, timestamp, deleteBtn);
+        title.append(timestamp, details, deleteBtn);
         $('.list_items').append(title);
     }
 }
