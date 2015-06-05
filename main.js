@@ -304,7 +304,7 @@ function deleteButton(ele) {
 function date_maker() {
     var year_label = $('<label>').attr('for', 'year').text('Year');
     var year = $('<select>').addClass("form-control").attr('id', 'year');
-    for (var i = 2015; i < 2025; i++) {
+    for (var i = 2015; i < 2050; i++) {
         var option = $('<option>').val(i).html(i);
         year.append(option);
     }
@@ -361,7 +361,6 @@ function date_maker() {
 $(document).ready(function() {
     load_page();
     date_maker();
-    $('#logout_btn').hide();
     // server_call();
     $('#logout_btn').click(function() {
         console.log('logout clicked');
